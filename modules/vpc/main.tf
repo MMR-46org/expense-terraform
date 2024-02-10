@@ -22,4 +22,9 @@ resource "aws_subnet" "main" {
 resource "aws_vpc_peering_connection" "main" {
   peer_vpc_id   = data.aws_vpc.default.id
   vpc_id        = aws_vpc.main.id
+  auto_accept   = true
+
+  tags = {
+    name = "${var.env}-vpc-with-default-vpc"
+  }
 }
