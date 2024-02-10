@@ -3,7 +3,7 @@ resource "aws_vpc" "main" {
 
 
   tags =  {
-    name = "${var.env}-${var.project_name}-vpc"
+    Name = "${var.env}-${var.project_name}-vpc"
   }
 }
 
@@ -25,6 +25,6 @@ resource "aws_vpc_peering_connection" "main" {
   auto_accept   = true
 
   tags = {
-    name = "${var.env}-vpc-with-default-vpc"
+    Name = "${var.env}-vpc-with-default-vpc"
   }
 }
