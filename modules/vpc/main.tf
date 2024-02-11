@@ -7,6 +7,21 @@ resource "aws_vpc" "main" {
   }
 }
 
+
+
+resource "aws_vpc_peering_connection" "main" {
+  peer_vpc_id   = data.aws_vpc.default.id
+  vpc_id        = aws_vpc.main.id
+  auto_accept   = true
+
+  tags = {
+    Name = "${var.env}-vpc-with-default-vpc"
+  }
+}
+
+
+
+
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
@@ -14,6 +29,8 @@ resource "aws_internet_gateway" "main" {
     Name = "${var.env}-${var.project_name}-IGW"
   }
 }
+
+
 
 
 resource "aws_subnet" "public" {
@@ -27,6 +44,8 @@ resource "aws_subnet" "public" {
   }
 }
 
+
+
 resource "aws_route_table" "public" {
   count               = length(var.public_subnets_cidr)
   vpc_id = aws_vpc.main.id
@@ -36,11 +55,24 @@ resource "aws_route_table" "public" {
     gateway_id = aws_internet_gateway.main.id
   }
 
+  route {
+    cidr_block = data.aws_vpc.default.cidr_block
+    vpc_peering_connection_id = aws_vpc_peering_connection.main.id
+  }
+
 
   tags = {
     Name = "public-rt-${count.index+1}"
   }
 }
+
+resource "aws_route_table_association"  "public" {
+  count = length(var.public_subnets_cidr)
+  route_table_id = lookup(element(aws_route_table.public, count.index), "id", null)
+  subnet_id      = lookup(element(aws_subnet.public, count.index),  "id", null)
+
+}
+
 
 resource "aws_subnet" "private" {
   count               = length(var.private_subnets_cidr)
@@ -54,15 +86,7 @@ resource "aws_subnet" "private" {
 }
 
 
-resource "aws_vpc_peering_connection" "main" {
-  peer_vpc_id   = data.aws_vpc.default.id
-  vpc_id        = aws_vpc.main.id
-  auto_accept   = true
 
-  tags = {
-    Name = "${var.env}-vpc-with-default-vpc"
-  }
-}
 
 resource "aws_route" "main" {
   route_table_id            = aws_vpc.main.default_route_table_id
@@ -71,11 +95,14 @@ resource "aws_route" "main" {
 }
 
 
+
 resource "aws_route" "default-vpc" {
   route_table_id            = data.aws_vpc.default.main_route_table_id
   destination_cidr_block    = aws_vpc.main.cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection.main.id
 }
+
+
 
 resource "aws_security_group" "test" {
   name        = "test"
@@ -103,6 +130,7 @@ resource "aws_security_group" "test" {
     Name = "allow_tls"
   }
 }
+
 
 
 resource "aws_instance" "test" {
