@@ -7,6 +7,15 @@ resource "aws_vpc" "main" {
   }
 }
 
+resource "aws_internet_gateway" "main" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "${var.env}-${var.project_name}-IGW"
+  }
+}
+
+
 resource "aws_subnet" "public" {
   count               = length(var.public_subnets_cidr)
   vpc_id              = aws_vpc.main.id
@@ -15,6 +24,21 @@ resource "aws_subnet" "public" {
 
   tags = {
     Name = "public_subnet-${count.index}"
+  }
+}
+
+resource "aws_route_table" "public" {
+  count               = length(var.public_subnets_cidr)
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.main.id
+  }
+
+
+  tags = {
+    Name = "public-rt-${count.index+1}"
   }
 }
 
