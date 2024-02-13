@@ -265,12 +265,3 @@ resource "aws_security_group" "test" {
     Name = "allow_tls"
   }
 }
-
-
-
-resource "aws_instance" "test" {
-  ami = data.aws_ami.example.image_id
-  instance_type = "t3.micro"
-  subnet_id = aws_subnet.private[0].id
-  vpc_security_group_ids = [aws_security_group.test.id]
-}
