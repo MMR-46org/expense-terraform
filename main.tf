@@ -18,7 +18,7 @@ module  "rds" {
   for_each                  = var.rds
   allocated_storage         = lookup(each.value, "allocated_storage" , null)
   dbname                    = lookup(each.value, "dbname", null)
-  engine                    = lookup(each.value, "engine" null)
+  engine                    = lookup(each.value, "engine", null)
   engine_version            = lookup(each.value, "engine_version", null)
   family                    = lookup(each.value, "family" , null)
   instance_class            = lookup(each.value, "instance_class", null)
