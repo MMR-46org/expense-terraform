@@ -18,6 +18,7 @@ resource "aws_internet_gateway" "main" {
 
 
 resource "aws_eip" "main" {
+  count       = length(var.public_subnets_cidr)
   domain      = "vpc"
 }
 
