@@ -6,7 +6,7 @@ resource "aws_db_parameter_group" "main" {
 
 
 
-resource "aws_db_instance" "default" {
+resource "aws_db_instance" "main" {
   allocated_storage    =  var.allocated_storage
   db_name              = var.db_name
   engine               = var.engine
