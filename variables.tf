@@ -1,4 +1,4 @@
-variable "env" {}
-variable "vpc" {}
-variable  "project_name" {}
-variable "rds" {}
+variable   "env" {}
+variable   "project_name" {}
+variable   "vpc" {}
+variable   "rds" {}
