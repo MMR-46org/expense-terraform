@@ -8,8 +8,8 @@ resource "aws_db_parameter_group" "main" {
 
 
 resource "aws_db_subnet_group" "main" {
-  name       = "${var.env}-${var.project_name}-subnet-group"
-  subnet_ids = var.subnet_ids
+  name         =  "${var.env}-${var.project_name}-subnet-group"
+  subnet_ids   = var.subnet_ids
 
   tags = {
     Name = "${var.env}-${var.project_name}-subnet-group"
@@ -38,7 +38,7 @@ resource "aws_security_group" "main" {
   }
 
     tags = {
-      Name = "allow_tls"
+      Name = "${var.env}-${var.project_name}-rds-security-group"
     }
   }
 

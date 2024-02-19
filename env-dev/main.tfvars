@@ -1,7 +1,7 @@
 env             =  "dev"
 project_name    =  "expense"
 kms_key_id      = "arn:aws:kms:us-east-1:512646826903:key/91ae5e2e-d734-4d42-b51d-1acf22378265"
-
+bastion_cidr   = ["172.31.4.230/32"]
 
 
 vpc = {
@@ -27,3 +27,17 @@ rds = {
     family               = "mysql5.7"
     }
   }
+
+
+app = {
+  main = {
+    backend_app_port   =  8080
+    backend_instance_capacity = 1
+    backend_instance_type  = "t3.small"
+
+
+    frontend_app_port   = 80
+    frontend_instance_capacity  = 1
+    frontend_instance_type   = "t3.small"
+  }
+}
