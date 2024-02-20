@@ -17,7 +17,7 @@ resource "aws_autoscaling_group" "main" {
   }
 
   tags = {
-    key                 = name
+    key                 = local.name
     value               = local.name
     propagate_at_launch = true
   }
