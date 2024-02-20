@@ -5,3 +5,4 @@ variable   "rds" {}
 variable   "app" {}
 variable   "kms_key_id" {}
 variable   "bastion_cidr" {}
+variable   "alb" {}
