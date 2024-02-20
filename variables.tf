@@ -6,3 +6,4 @@ variable   "app" {}
 variable   "kms_key_id" {}
 variable   "bastion_cidr" {}
 variable   "alb" {}
+variable   "acm_arn" {}

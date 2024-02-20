@@ -92,6 +92,7 @@ module "public-alb" {
   env            = var.env
   internal       = false
   project_name   = var.project_name
+  acm_arn        = var.acm_arn
 
   sg_cidr_blocks = ["0.0.0.0/0"]
   subnets        = lookup(lookup(module.vpc, "main", null), "public_subnets_ids", null)
@@ -109,6 +110,7 @@ module "private-lb" {
   env            = var.env
   internal       = true
   project_name   = var.project_name
+  acm_arn        = var.acm_arn
 
   sg_cidr_blocks = lookup(lookup(module.vpc, "main", null), "web_subnets_cidr", null)
   subnets        = lookup(lookup(module.vpc, "main", null), "app_subnets_ids", null)
