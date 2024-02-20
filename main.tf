@@ -93,6 +93,8 @@ module "public-alb" {
   internal       = false
   project_name   = var.project_name
   acm_arn        = var.acm_arn
+  dns_name       = "frontend"
+  zone_id        = var.zone_id
 
 
   sg_cidr_blocks = ["0.0.0.0/0"]
@@ -113,6 +115,8 @@ module "private-lb" {
   internal       = true
   project_name   = var.project_name
   acm_arn        = var.acm_arn
+  dns_name       = "backend"
+  zone_id        =  var.zone_id
 
   sg_cidr_blocks = lookup(lookup(module.vpc, "main", null), "web_subnets_cidr", null)
   subnets        = lookup(lookup(module.vpc, "main", null), "app_subnets_ids", null)
