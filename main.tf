@@ -76,7 +76,7 @@ module "frontend" {
 
   sg_cidr_block  = lookup(lookup(module.vpc, "main", null), "web_subnets_cidr", null)
   vpc_id         = lookup(lookup(module.vpc, "main", null),"vpc_id", null)
-  vpc_zone_identifier    = lookup(lookup(module.vpc, "main", null), "web_subnets_cidr", null)
+  vpc_zone_identifier    = lookup(lookup(module.vpc, "main", null), "web_subnets_ids", null)
 
 
 
