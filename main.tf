@@ -85,7 +85,7 @@ module "frontend" {
 
 module "public-alb" {
   source         = "./modules/alb"
-
+  for_each       = var.vpc
 
 
   alb_name       = "public"
@@ -94,7 +94,7 @@ module "public-alb" {
   project_name   = var.project_name
 
   sg_cidr_blocks = ["0.0.0.0/0"]
-  subnets        = lookup(lookup(module.vpc, "main", null), "public_subnet_ids", null)
+  subnets        = lookup(lookup(module.vpc, "main", null), "public_subnets_ids", null)
   vpc_id         = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
 }
 
@@ -102,6 +102,7 @@ module "public-alb" {
 
 module "private-lb" {
   source         = "./modules/alb"
+  for_each       = var.vpc
 
 
   alb_name       = "private"
@@ -110,7 +111,7 @@ module "private-lb" {
   project_name   = var.project_name
 
   sg_cidr_blocks = lookup(lookup(module.vpc, "main", null), "web_subnets_cidr", null)
-  subnets        = lookup(lookup(module.vpc, "main", null), "app_subnet_ids", null)
+  subnets        = lookup(lookup(module.vpc, "main", null), "app_subnets_ids", null)
   vpc_id         = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
 }
 
