@@ -94,9 +94,11 @@ module "public-alb" {
   project_name   = var.project_name
   acm_arn        = var.acm_arn
 
+
   sg_cidr_blocks = ["0.0.0.0/0"]
   subnets        = lookup(lookup(module.vpc, "main", null), "public_subnets_ids", null)
   vpc_id         = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
+  target_group_arn = lookup(lookup(module.frontend, "main", null), "target_group_arn", null)
 }
 
 
@@ -115,5 +117,6 @@ module "private-lb" {
   sg_cidr_blocks = lookup(lookup(module.vpc, "main", null), "web_subnets_cidr", null)
   subnets        = lookup(lookup(module.vpc, "main", null), "app_subnets_ids", null)
   vpc_id         = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
+  target_group_arn = lookup(lookup(module.backend, "main", null), "target_group_arn", null)
 }
 

@@ -12,6 +12,7 @@ resource "aws_autoscaling_group" "main" {
   vpc_zone_identifier = var.vpc_zone_identifier
   target_group_arns   = [aws_lb_target_group.main.arn]
 
+
   launch_template {
     id      = aws_launch_template.main.id
     version = "$Latest"
