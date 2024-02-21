@@ -52,7 +52,7 @@ module "backend" {
   instance_type    = lookup(each.value, "backend_instance_type", null)
 
 
-  sg_cidr_block              = lookup(lookup(module.vpc, "main", null), "web_subnets_cidr", null)
+  sg_cidr_block              = lookup(lookup(var.vpc, "main", null), "web_subnets_cidr", null)
   vpc_id                     = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
   vpc_zone_identifier        = lookup(lookup(module.vpc, "main", null), "app_subnets_ids",  null)
 }
@@ -74,7 +74,7 @@ module "frontend" {
   instance_type  =  lookup(each.value, "frontend_instance_type", null)
 
 
-  sg_cidr_block  = lookup(lookup(module.vpc, "main", null), "web_subnets_cidr", null)
+  sg_cidr_block  = lookup(lookup(var.vpc, "main", null), "web_subnets_cidr", null)
   vpc_id         = lookup(lookup(module.vpc, "main", null),"vpc_id", null)
   vpc_zone_identifier    = lookup(lookup(module.vpc, "main", null), "web_subnets_ids", null)
 
@@ -118,7 +118,7 @@ module "private-lb" {
   dns_name       = "backend"
   zone_id        =  var.zone_id
 
-  sg_cidr_blocks = lookup(lookup(module.vpc, "main", null), "web_subnets_cidr", null)
+  sg_cidr_blocks = lookup(lookup(var.vpc, "main", null), "web_subnets_cidr", null)
   subnets        = lookup(lookup(module.vpc, "main", null), "app_subnets_ids", null)
   vpc_id         = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
   target_group_arn = lookup(lookup(module.backend, "main", null), "target_group_arn", null)
