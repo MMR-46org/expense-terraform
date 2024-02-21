@@ -85,7 +85,6 @@ module "frontend" {
 
 module "public-alb" {
   source         = "./modules/alb"
-  for_each       = var.alb
 
 
   alb_name       = "public"
@@ -107,7 +106,6 @@ module "public-alb" {
 
 module "private-lb" {
   source         = "./modules/alb"
-  for_each       = var.alb
 
 
   alb_name       = "private"
