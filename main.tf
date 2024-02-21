@@ -30,7 +30,7 @@ module "rds" {
 
   subnet_ids        = lookup(lookup(module.vpc, "main", null), "db_subnets_ids" , null)
   vpc_id            = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
-  sg_cidr_blocks    = lookup(lookup(module.vpc, "main", null),"app_subnets_cidr", null)
+  sg_cidr_blocks    = lookup(lookup(var.vpc, "main", null),"app_subnets_cidr", null)
 
 
 }
