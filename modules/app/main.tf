@@ -5,8 +5,8 @@ resource "aws_launch_template" "main" {
   vpc_security_group_ids = [aws_security_group.main.id]
 
   user_data        = base64encode(templatefile("${path.module}/userdata.sh",{
-    service_name  = var.component
-    env           = var.env
+    service_name   = var.component
+    env            = var.env
   } ))
 
   iam_instance_profile {
