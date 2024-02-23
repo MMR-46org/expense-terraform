@@ -3,7 +3,17 @@ resource "aws_launch_template" "main" {
   image_id      = data.aws_ami.centos8.image_id
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
+
+  userdata        = base64encode(templatefile("${path.module}/userdata.sh",{
+    service_name  = var.component
+    env           = var.env
+  } ))
+
+  iam_instance_profile {
+    name = aws_iam_instance_profile.main.name
+  }
 }
+
 
 resource "aws_autoscaling_group" "main" {
   desired_capacity   = var.instance_capacity
