@@ -1,5 +1,4 @@
 resource "aws_vpc" "main" {
-  count            = length(var.public_subnets_cidr)
   cidr_block       = var.vpc_cidr
 
   tags = {
