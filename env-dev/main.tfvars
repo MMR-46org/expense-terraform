@@ -27,7 +27,7 @@ rds = {
     db_name              = "mydb"
     engine               = "mysql"
     engine_version       = "5.7"
-    instance_class       = "t3.micro"
+    instance_class       = "db.t3.micro"
     family               = "mysql5.7"
     }
 
