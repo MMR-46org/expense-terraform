@@ -36,7 +36,7 @@ resource "aws_nat_gateway" "main" {
 resource "aws_subnet" "public" {
   count              = length(var.public_subnets_cidr)
   vpc_id             = aws_vpc.main.id
-  cidr_block         = element(var.public_subnets_cidr, count.index)
+  cidr_block         = lookup(element(var.public_subnets_cidr, count.index), "cidr_block", null)
   availability_zone  = element(var.az, count.index)
 
   tags = {
