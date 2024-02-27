@@ -32,7 +32,7 @@ resource "aws_autoscaling_group" "main" {
   max_size           = var.instance_capacity
   min_size           = var.instance_capacity
   vpc_zone_identifier = var.vpc_zone_identifier
-  target_group_arn    = [aws_lb_target_group.main.arn]
+  target_group_arns    = [aws_lb_target_group.main.arn]
 
 
   launch_template {
