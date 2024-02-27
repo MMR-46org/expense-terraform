@@ -12,6 +12,18 @@ resource "aws_launch_template" "main" {
   iam_instance_profile {
     name = aws_iam_instance_profile.main.name
   }
+
+  block_device_mappings {
+    device_name = "/dev/sda1"
+
+    ebs {
+      volume_size = 10
+      encrypted = true
+      kms_key_id = var.kms_key_id
+      delete_on_termination = true
+    }
+  }
+
 }
 
 
@@ -91,6 +103,7 @@ resource "aws_lb_target_group" "main" {
 
 resource "aws_iam_role" "main" {
   name               = "${local.name}-role"
+
   assume_role_policy = jsonencode({
     Version   = "2012-10-17"
     Statement = [

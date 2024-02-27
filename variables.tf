@@ -1,10 +1,12 @@
-variable   "env" {}
-variable   "project_name" {}
-variable   "vpc" {}
-variable   "rds" {}
-variable   "app" {}
-variable   "kms_key_id" {}
-variable   "bastion_cidr" {}
-variable   "alb" {}
-variable   "acm_arn" {}
-variable   "zone_id" {}
+variable "env" {}
+variable "project_name" {}
+variable "kms_key_id" {}
+variable "bastion_cidrs" {}
+variable "acm_arn" {}
+variable "zone_id" {}
+
+
+variable "vpc" {}
+variable "rds" {}
+variable "app" {}
+variable "alb" {}

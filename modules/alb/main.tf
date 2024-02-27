@@ -2,14 +2,49 @@ resource "aws_lb" "main" {
   name               = "${var.project_name}-${var.alb_name}"
   internal           = var.internal
   load_balancer_type = "application"
-  security_groups    =  [aws_security_group.main.id]
+  security_groups    = [aws_security_group.main.id]
   subnets            = var.subnets
-
+  enable_deletion_protection = true
 
   tags = {
-    Environment = "${local.name}-alb"
+    name = "${local.name}-alb"
   }
 }
+
+
+resource "aws_security_group" "main" {
+  name        = "${local.name}-security-group"
+  description = "${local.name}-security-group"
+  vpc_id      =  var.vpc_id
+
+  egress {
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = var.sg_cidr_blocks
+    description      = "HTTP"
+  }
+
+  ingress {
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = var.sg_cidr_blocks
+    description      = "HTTPS"
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${local.name}-sg"
+  }
+}
+
 
 
 resource "aws_lb_listener" "https" {
@@ -22,9 +57,9 @@ resource "aws_lb_listener" "https" {
   default_action {
     type             = "forward"
     target_group_arn = var.target_group_arn
-
   }
 }
+
 
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.main.arn
@@ -42,50 +77,11 @@ resource "aws_lb_listener" "http" {
   }
 }
 
+
 resource "aws_route53_record" "main" {
   zone_id = var.zone_id
   name    = "${var.dns_name}-${var.env}"
   type    = "CNAME"
-  ttl     = "30"
+  ttl     = 30
   records = [aws_lb.main.dns_name]
 }
-
-
-
-
-
-
-
-resource "aws_security_group" "main" {
-  name        = "${local.name}-alb-security-group"
-  description = "${local.name}-alb-security-group"
-  vpc_id      =  var.vpc_id
-
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port        = 80
-    to_port          = 80
-    protocol         = "tcp"
-    cidr_blocks      = var.sg_cidr_blocks
-    description      = "HTTP"
-  }
-
-  ingress {
-    from_port        = 443
-    to_port          = 443
-    protocol         = "tcp"
-    cidr_blocks      = var.sg_cidr_blocks
-    description      = "HTTPS"
-  }
-
-  tags = {
-    Name = "${local.name}-alb-sg"
-  }
-}
-

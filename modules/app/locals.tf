@@ -1,3 +1,3 @@
-locals   {
-  name = "${var.env}-${var.project_name}-${var.component}"
+locals {
+  name  =  "${var.env}-${var.project_name}-${var.component}"
 }

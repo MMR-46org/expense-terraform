@@ -1,15 +1,12 @@
 resource "aws_db_parameter_group" "main" {
-  name = "${var.env}-${var .project_name}-pg"
+  name   = "${var.env}-${var.project_name}-pg"
   family = var.family
+
 }
 
-
-
-
-
 resource "aws_db_subnet_group" "main" {
-  name         =  "${var.env}-${var.project_name}-subnet-group"
-  subnet_ids   = var.subnet_ids
+  name       = "${var.env}-${var.project_name}-subnet-group"
+  subnet_ids = var.subnet_ids
 
   tags = {
     Name = "${var.env}-${var.project_name}-subnet-group"
@@ -17,34 +14,10 @@ resource "aws_db_subnet_group" "main" {
 }
 
 
-resource "aws_security_group" "main" {
-    name        = "${var.env}-${var.project_name}-rds-security-group"
-    description = "${var.env}-${var.project_name}-rds-security-group"
-    vpc_id      =  var.vpc_id
-
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-  ingress {
-    from_port        = 3306
-    to_port          = 3306
-    protocol         = "tcp"
-    cidr_blocks      = var.sg_cidr_blocks
-  }
-
-    tags = {
-      Name = "${var.env}-${var.project_name}-rds-security-group"
-    }
-  }
 
 resource "aws_db_instance" "main" {
   identifier           = "${var.env}-${var.project_name}-rds"
-  allocated_storage    =  var.allocated_storage
+  allocated_storage    = var.allocated_storage
   db_name              = var.db_name
   engine               = var.engine
   engine_version       = var.engine_version
@@ -52,18 +25,40 @@ resource "aws_db_instance" "main" {
   username             = data.aws_ssm_parameter.username.value
   password             = data.aws_ssm_parameter.password.value
   parameter_group_name = aws_db_parameter_group.main.name
-  skip_final_snapshot  =  true
-  storage_encrypted    =  true
+  skip_final_snapshot  = true
+  storage_encrypted    = true
   kms_key_id           = var.kms_key_id
   db_subnet_group_name = aws_db_subnet_group.main.name
   vpc_security_group_ids = [aws_security_group.main.id]
-
-
 }
 
 
+resource "aws_security_group" "main" {
+  name        = "${var.env}-${var.project_name}-rds-security-group"
+  description = "${var.env}-${var.project_name}-rds-security-group"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "-1"
+    cidr_blocks     = var.sg_cidr_blocks
+
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+
+  }
 
 
 
 
 
+  tags = {
+    Name = "${var.env}-${var.project_name}-rds-security-group"
+  }
+}
