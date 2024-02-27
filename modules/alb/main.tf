@@ -4,7 +4,6 @@ resource "aws_lb" "main" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.main.id]
   subnets            = var.subnets
-  enable_deletion_protection = true
 
   tags = {
     name = "${local.name}-alb"
