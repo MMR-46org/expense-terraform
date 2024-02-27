@@ -1,3 +1,14 @@
+resource "aws_vpc" "main" {
+  count            = length(var.public_subnets_cidr)
+  cidr_block       = var.vpc_cidr
+
+  tags = {
+    Name = "${var.env}-${var.project_name}-vpc"
+  }
+}
+
+
+
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
@@ -21,14 +32,6 @@ resource "aws_nat_gateway" "main" {
   }
 }
 
-resource "aws_vpc" "main" {
-  count            = length(var.public_subnets_cidr)
-  cidr_block       = var.vpc_cidr
-
-  tags = {
-    Name = "${var.env}-${var.project_name}-vpc"
-  }
-}
 
 
 resource "aws_subnet" "public" {
@@ -215,6 +218,6 @@ resource "aws_route" "main" {
 
 resource "aws_route" "default-vpc" {
   route_table_id            = data.aws_vpc.default.main_route_table_id
-  destination_cidr_block    = "10.0.1.0/22"
-  vpc_peering_connection_id = "pcx-45ff3dc1"
+  destination_cidr_block    = aws_vpc.main.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.main.id
 }
