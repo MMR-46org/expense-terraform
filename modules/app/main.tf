@@ -1,5 +1,5 @@
 resource "aws_launch_template" "main" {
-  name_prefix   = "${local.name}-lanuch-templeate"
+  name_prefix   = "${local.name}-lanuch-template"
   image_id      = data.aws_ami.centos8.image_id
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
