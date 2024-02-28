@@ -12,8 +12,8 @@ resource "aws_lb" "main" {
 
 
 resource "aws_security_group" "main" {
-  name        = "${local.name}-security-group"
-  description = "${local.name}-security-group"
+  name        = "${local.name}-alb-security-group"
+  description = "${local.name}-alb-security-group"
   vpc_id      =  var.vpc_id
 
   egress {
