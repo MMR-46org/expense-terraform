@@ -113,7 +113,6 @@ resource "aws_iam_role" "main" {
           Sid       = ""
           Principal = {
             Service = "ec2.amazonaws.com"
-            service = "autoscaling.amazonaws.com"
           }
         },
       ]
