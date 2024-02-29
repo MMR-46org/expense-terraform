@@ -140,40 +140,10 @@ resource "aws_iam_role" "main" {
           ],var.parameters)
         },
         {
-          "Sid": "DescribeAllParameters",
-          "Effect": "Allow",
-          "Action": "ssm:DescribeParameters",
-          "Resource": "*"
-        },
-        {
-          "Sid": "Allow external account 512646826903 use of the customer managed key",
-          "Effect": "Allow",
-          "Principal": {
-            "AWS": [
-              "arn:aws:iam::512646826903:root"
-            ]
-          },
-          "Action": [
-            "kms:Encrypt",
-            "kms:Decrypt",
-            "kms:ReEncrypt*",
-            "kms:GenerateDataKey*",
-            "kms:DescribeKey"
-          ],
-          "Resource": "*"
-        },
-        {
-          "Sid": "Allow attachment of persistent resources in external account 111122223333",
-          "Effect": "Allow",
-          "Principal": {
-            "AWS": [
-              "arn:aws:iam::512646826903:root"
-            ]
-          },
-          "Action": [
-            "kms:CreateGrant"
-          ],
-          "Resource": "*"
+          "Sid" : "DescribeAllParameters",
+          "Effect" : "Allow",
+          "Action" : "ssm:DescribeParameters",
+          "Resource" : "*"
         }
       ]
     })
