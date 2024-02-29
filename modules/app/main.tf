@@ -124,7 +124,7 @@ resource "aws_iam_role" "main" {
       "Version": "2012-10-17",
       "Statement": [
         {
-          "Sid": "Allow service-linked role use of the customer managed key",
+          "Sid": "kmskeyPermission",
           "Effect": "Allow",
           "Principal": {
             "AWS": [
@@ -141,7 +141,7 @@ resource "aws_iam_role" "main" {
           "Resource": "*"
         },
         {
-          "Sid": "Allow attachment of persistent resources",
+          "Sid": "kmsGrant",
           "Effect": "Allow",
           "Principal": {
             "AWS": [
