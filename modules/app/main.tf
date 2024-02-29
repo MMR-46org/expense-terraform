@@ -13,16 +13,16 @@ resource "aws_launch_template" "main" {
     name = aws_iam_instance_profile.main.name
   }
 
-#  block_device_mappings {
-#    device_name = "/dev/sda1"
-#
-#    ebs {
-#      volume_size = 10
-#      encrypted   = true
-#      kms_key_id  = var.kms_key_id
-#      delete_on_termination = true
-#    }
-#  }
+  block_device_mappings {
+    device_name = "/dev/sda1"
+
+    ebs {
+      volume_size = 10
+      encrypted   = true
+      kms_key_id  = var.kms_key_id
+      delete_on_termination = true
+    }
+  }
 
 }
 
@@ -143,6 +143,36 @@ resource "aws_iam_role" "main" {
           "Sid": "DescribeAllParameters",
           "Effect": "Allow",
           "Action": "ssm:DescribeParameters",
+          "Resource": "*"
+        },
+        {
+          "Sid": "Allow external account 512646826903 use of the customer managed key",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": [
+              "arn:aws:iam::512646826903:root"
+            ]
+          },
+          "Action": [
+            "kms:Encrypt",
+            "kms:Decrypt",
+            "kms:ReEncrypt*",
+            "kms:GenerateDataKey*",
+            "kms:DescribeKey"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Sid": "Allow attachment of persistent resources in external account 111122223333",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": [
+              "arn:aws:iam::512646826903:root"
+            ]
+          },
+          "Action": [
+            "kms:CreateGrant"
+          ],
           "Resource": "*"
         }
       ]
