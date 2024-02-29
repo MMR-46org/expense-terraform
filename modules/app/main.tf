@@ -151,7 +151,7 @@ resource "aws_iam_role" "main" {
           "Effect": "Allow",
           "Principal": {
             "AWS": [
-              "arn:aws:iam::512646826903:role/aws-service-role/autoscaling.amazonaws.com/aws_autoscaling_group"
+              "arn:aws:iam::512646826903:role/aws-service-role/autoscaling.amazonaws.com/aws_iam_role"
             ]
           },
           "Action": [
@@ -168,7 +168,7 @@ resource "aws_iam_role" "main" {
           "Effect": "Allow",
           "Principal": {
             "AWS": [
-              "arn:aws:iam::512646826903:role/aws-service-role/autoscaling.amazonaws.com/aws_autoscaling_group"
+              "arn:aws:iam::512646826903:role/aws-service-role/autoscaling.amazonaws.com/aws_iam_role"
             ]
           },
           "Action": [
