@@ -120,49 +120,6 @@ resource "aws_iam_role" "main" {
 
 
   inline_policy {
-    name  = "kms-key-policy"
-    policy = jsonencode({
-      "Version": "2012-10-17",
-      "Statement": [
-        {
-          "Sid": "kmskeyPermission",
-          "Effect": "Allow",
-
-            "AWS": [
-              "arn:aws:iam::512646826903:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
-            ],
-          "Action": [
-            "kms:Encrypt",
-            "kms:Decrypt",
-            "kms:ReEncrypt*",
-            "kms:GenerateDataKey*",
-            "kms:DescribeKey"
-          ],
-          "Resource": "*"
-        },
-        {
-          "Sid": "kmsGrant",
-          "Effect": "Allow",
-
-            "AWS": [
-              "arn:aws:iam::512646826903:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
-            ],
-          "Action": [
-            "kms:CreateGrant"
-          ],
-          "Resource": "*",
-          "Condition": {
-            "Bool": {
-              "kms:GrantIsForAWSResource": true
-            }
-          }
-        }
-
-      ]
-    })
-  }
-
-  inline_policy {
     name = "parameter-store"
 
     policy = jsonencode({
