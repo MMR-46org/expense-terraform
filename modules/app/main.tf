@@ -127,11 +127,10 @@ resource "aws_iam_role" "main" {
         {
           "Sid": "kmskeyPermission",
           "Effect": "Allow",
-          "Principal": {
+
             "AWS": [
               "arn:aws:iam::512646826903:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
-            ]
-          },
+            ],
           "Action": [
             "kms:Encrypt",
             "kms:Decrypt",
@@ -144,11 +143,10 @@ resource "aws_iam_role" "main" {
         {
           "Sid": "kmsGrant",
           "Effect": "Allow",
-          "Principal": {
+
             "AWS": [
               "arn:aws:iam::512646826903:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
-            ]
-          },
+            ],
           "Action": [
             "kms:CreateGrant"
           ],
