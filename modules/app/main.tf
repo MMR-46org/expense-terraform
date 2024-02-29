@@ -105,18 +105,30 @@ resource "aws_iam_role" "main" {
   name               = "${local.name}-role"
 
   assume_role_policy = jsonencode({
-    Version   = "2012-10-17"
-    Statement = [
+    "Version": "2012-10-17",
+    "Statement": [
       {
-        Action    = "sts:AssumeRole"
-        Effect    = "Allow"
-        Sid       = ""
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-      },
+        "Sid": "AllowCreationOfGrantForTheKMSKeyinExternalAccount444455556666",
+        "Effect": "Allow",
+        "Action": "kms:CreateGrant",
+        "Resource": "arn:aws:kms:us-east-1:512646826903:key/91ae5e2e-d734-4d42-b51d-1acf22378265"
+      }
     ]
-  })
+  },
+    {
+      Version   = "2012-10-17"
+      Statement = [
+        {
+          Action    = "sts:AssumeRole"
+          Effect    = "Allow"
+          Sid       = ""
+          Principal = {
+            Service = "ec2.amazonaws.com"
+          }
+        },
+      ]
+    })
+
 
   inline_policy {
     name  = "kms-key-policy"
