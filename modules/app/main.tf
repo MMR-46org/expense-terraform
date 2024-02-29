@@ -146,37 +146,6 @@ resource "aws_iam_role" "main" {
           "Effect" : "Allow",
           "Action" : "ssm:DescribeParameters",
           "Resource" : "*"
-        },
-        {
-          "Sid": "kmskeyPolicy",
-          "Effect": "Allow",
-          "Action": [
-            "kms:Encrypt",
-            "kms:Decrypt",
-            "kms:ReEncrypt*",
-            "kms:GenerateDataKey*",
-            "kms:DescribeKey"
-          ],
-          "Resource": concat ([
-            "arn:aws:iam::512646826903:instance-profile/dev-expense-backend-role",
-            "arn:aws:iam::512646826903:instance-profile/dev-expense-frontend-role"
-          ])
-        },
-        {
-          "Sid": "kmsCreateGrant",
-          "Effect": "Allow",
-          "Action": [
-            "kms:CreateGrant"
-          ],
-          "Resource": concat ([
-            "arn:aws:iam::512646826903:instance-profile/dev-expense-backend-role",
-            "arn:aws:iam::512646826903:instance-profile/dev-expense-frontend-role"
-          ]),
-          "Condition": {
-            "Bool": {
-              "kms:GrantIsForAWSResource": true
-            }
-          }
         }
       ]
     })
@@ -189,3 +158,45 @@ resource "aws_iam_instance_profile" "main" {
 }
 
 
+
+resource "aws_kms_key" "main" {
+  key_id = var.kms_key_id
+  policy = jsonencode({
+    Id = "example"
+    Statement = [
+      {
+        "Sid": "kmskeyPolicy",
+        "Effect": "Allow",
+        "Action": [
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:DescribeKey"
+      ],
+        "Resource": concat ([
+        "arn:aws:iam::512646826903:instance-profile/dev-expense-backend-role",
+        "arn:aws:iam::512646826903:instance-profile/dev-expense-frontend-role"
+      ])
+      },
+      {
+        "Sid": "kmsCreateGrant",
+        "Effect": "Allow",
+        "Action": [
+          "kms:CreateGrant"
+        ],
+        "Resource": concat ([
+          "arn:aws:iam::512646826903:instance-profile/dev-expense-backend-role",
+          "arn:aws:iam::512646826903:instance-profile/dev-expense-frontend-role"
+        ]),
+        "Condition": {
+          "Bool": {
+            "kms:GrantIsForAWSResource": true
+          }
+        }
+      },
+
+    ]
+    Version = "2012-10-17"
+  })
+}
