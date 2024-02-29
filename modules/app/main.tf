@@ -145,6 +145,41 @@ resource "aws_iam_role" "main" {
           "Effect" : "Allow",
           "Action" : "ssm:DescribeParameters",
           "Resource" : "*"
+        },
+        {
+          "Sid": "kmskeyPolicy",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": [
+              "arn:aws:iam::512646826903:role/aws-service-role/autoscaling.amazonaws.com/aws_autoscaling_group"
+            ]
+          },
+          "Action": [
+            "kms:Encrypt",
+            "kms:Decrypt",
+            "kms:ReEncrypt*",
+            "kms:GenerateDataKey*",
+            "kms:DescribeKey"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Sid": "kmsCreateGrant",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": [
+              "arn:aws:iam::512646826903:role/aws-service-role/autoscaling.amazonaws.com/aws_autoscaling_group"
+            ]
+          },
+          "Action": [
+            "kms:CreateGrant"
+          ],
+          "Resource": "*",
+          "Condition": {
+            "Bool": {
+              "kms:GrantIsForAWSResource": true
+            }
+          }
         }
       ]
     })
