@@ -127,9 +127,15 @@ resource "aws_iam_role" "main" {
       "Version": "2012-10-17",
       "Statement": [
         {
-          "Sid": "GetParameter",
+          "Sid": "GetParameterandKMSkey",
           "Effect": "Allow",
           "Action": [
+            "kms:Decrypt",
+            "kms:Encrypt",
+            "kms:GenerateDataKey*",
+            "kms:ReEncrypt*",
+            "kms:DescribeKey",
+            "kms:CreateGrant",
             "kms:Decrypt",
             "ssm:GetParameterHistory",
             "ssm:GetParametersByPath",
