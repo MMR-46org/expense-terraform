@@ -113,6 +113,7 @@ resource "aws_iam_role" "main" {
           Sid       = ""
           Principal = {
             Service = "ec2.amazonaws.com"
+            service = "autoscaling.amazonaws.com"
           }
         },
       ]
@@ -149,6 +150,11 @@ resource "aws_iam_role" "main" {
         {
           "Sid": "kmskeyPolicy",
           "Effect": "Allow",
+          "Principal": {
+            "AWS": [
+              "autoscaling.amazonaws.com"
+            ]
+          },
           "Action": [
             "kms:Encrypt",
             "kms:Decrypt",
@@ -164,6 +170,11 @@ resource "aws_iam_role" "main" {
         {
           "Sid": "kmsCreateGrant",
           "Effect": "Allow",
+          "Principal": {
+            "AWS": [
+              "autoscaling.amazonaws.com"
+            ]
+          },
           "Action": [
             "kms:CreateGrant"
           ],
