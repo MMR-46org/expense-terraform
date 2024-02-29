@@ -149,12 +149,6 @@ resource "aws_iam_role" "main" {
         {
           "Sid": "kmskeyPolicy",
           "Effect": "Allow",
-          "Principal": {
-            "AWS": concat ([
-              "arn:aws:iam::512646826903:instance-profile/dev-expense-backend-role",
-              "arn:aws:iam::512646826903:instance-profile/dev-expense-frontend-role"
-            ])
-          },
           "Action": [
             "kms:Encrypt",
             "kms:Decrypt",
@@ -162,21 +156,21 @@ resource "aws_iam_role" "main" {
             "kms:GenerateDataKey*",
             "kms:DescribeKey"
           ],
-          "Resource": "*"
+          "Resource": concat ([
+            "arn:aws:iam::512646826903:instance-profile/dev-expense-backend-role",
+            "arn:aws:iam::512646826903:instance-profile/dev-expense-frontend-role"
+          ])
         },
         {
           "Sid": "kmsCreateGrant",
           "Effect": "Allow",
-          "Principal": {
-            "AWS": [
-              "arn:aws:iam::512646826903:instance-profile/dev-expense-backend-role",
-              "arn:aws:iam::512646826903:instance-profile/dev-expense-frontend-role"
-            ]
-          },
           "Action": [
             "kms:CreateGrant"
           ],
-          "Resource": "*",
+          "Resource": concat ([
+            "arn:aws:iam::512646826903:instance-profile/dev-expense-backend-role",
+            "arn:aws:iam::512646826903:instance-profile/dev-expense-frontend-role"
+          ]),
           "Condition": {
             "Bool": {
               "kms:GrantIsForAWSResource": true
