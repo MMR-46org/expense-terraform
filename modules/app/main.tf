@@ -160,7 +160,7 @@ resource "aws_iam_instance_profile" "main" {
 
 
 resource "aws_kms_key" "main" {
-  key_id = var.kms_key_id
+  key_id = aws_kms_key.main.id
   policy = jsonencode({
     Id = "example"
     Statement = [
