@@ -150,9 +150,10 @@ resource "aws_iam_role" "main" {
           "Sid": "kmskeyPolicy",
           "Effect": "Allow",
           "Principal": {
-            "AWS": [
-              "arn:aws:iam::512646826903:role/aws-service-role/autoscaling.amazonaws.com/aws_iam_role"
-            ]
+            "AWS": concat ([
+              "arn:aws:iam::512646826903:instance-profile/dev-expense-backend-role",
+              "arn:aws:iam::512646826903:instance-profile/dev-expense-frontend-role"
+            ])
           },
           "Action": [
             "kms:Encrypt",
@@ -168,7 +169,8 @@ resource "aws_iam_role" "main" {
           "Effect": "Allow",
           "Principal": {
             "AWS": [
-              "arn:aws:iam::512646826903:role/aws-service-role/autoscaling.amazonaws.com/aws_iam_role"
+              "arn:aws:iam::512646826903:instance-profile/dev-expense-backend-role",
+              "arn:aws:iam::512646826903:instance-profile/dev-expense-frontend-role"
             ]
           },
           "Action": [
