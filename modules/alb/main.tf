@@ -16,7 +16,7 @@ resource "aws_security_group" "main" {
   description = "${local.name}-alb-security-group"
   vpc_id      =  var.vpc_id
 
-  egress {
+  ingress {
     from_port        = 80
     to_port          = 80
     protocol         = "tcp"
