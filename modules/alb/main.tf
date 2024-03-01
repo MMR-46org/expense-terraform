@@ -1,5 +1,5 @@
 resource "aws_lb" "main" {
-  name               = "${var.project_name}-${var.alb_name}"
+  name               = "${local.name}-alb-sg"
   internal           = var.internal
   load_balancer_type = "application"
   security_groups    = [aws_security_group.main.id]
@@ -37,6 +37,7 @@ resource "aws_security_group" "main" {
     to_port          = 0
     protocol         = "-1"
     cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   tags = {
