@@ -105,7 +105,7 @@ module  "public_alb" {
 
   subnets          = lookup(lookup(module.vpc, "main", null), "public_subnet_id", null)
   vpc_id           = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
-  target_group_arn = lookup(lookup(module.frontend, "main", null), "target_group_arn", null)
+  target_group_arn = lookup(lookup(module.frontend, "main", null), "target_group_arns", null)
 }
 
 
@@ -125,6 +125,6 @@ module  "private_alb" {
   sg_cidr_blocks = lookup(lookup(var.vpc, "main", null), "web_subnets_cidr", null)
   subnets        = lookup(lookup(module.vpc, "main", null), "app_subnet_id", null)
   vpc_id         = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
-  target_group_arn = lookup(lookup(module.backend, "main", null), "target_group_arn", null)
+  target_group_arn = lookup(lookup(module.backend, "main", null), "target_group_arns", null)
 
 }
