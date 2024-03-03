@@ -42,6 +42,7 @@ module "rds" {
 
 
 module "backend" {
+  depends_on           = [module.rds]
   source               = "./modules/app"
   for_each             = var.app
 
