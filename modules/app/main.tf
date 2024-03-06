@@ -45,6 +45,12 @@ resource "aws_autoscaling_group" "main" {
     value               = local.name
     propagate_at_launch = true
   }
+
+  tag {
+    key                 = "Moniter"
+    value               = "yes"
+    propagate_at_launch = true
+  }
 }
 
 
