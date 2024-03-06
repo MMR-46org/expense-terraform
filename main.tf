@@ -47,6 +47,7 @@ module "backend" {
   for_each             = var.app
 
   bastion_cidrs        = var.bastion_cidrs
+  prometheus_cidrs     = var.prometheus_cidrs
   component            = "backend"
   env                  = var.env
   kms_key_id           = var.kms_key_id
@@ -70,6 +71,7 @@ module "frontend" {
   for_each             = var.app
 
   bastion_cidrs        = var.bastion_cidrs
+  prometheus_cidrs     = var.prometheus_cidrs
   component            = "frontend"
   env                  = var.env
   kms_key_id           = var.kms_key_id

@@ -10,4 +10,4 @@ variable "instance_capacity" {}
 variable "vpc_zone_identifier" {}
 variable "parameters" {}
 variable "kms_key_id" {}
-
+variable "prometheus_cidrs" {}
