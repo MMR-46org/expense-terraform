@@ -57,7 +57,7 @@ module "backend" {
   app_port             = lookup(each.value, "backend_app_port", null)
   instance_capacity    = lookup(each.value, "backend_instance_capacity", null)
   instance_type        = lookup(each.value, "backend_instance_type", null)
-  parameters           = ["arn:aws:ssm:us-east-1:512646826903:parameter/${var.env}.${var.project_name}.rds.*"]
+  parameters           = ["arn:aws:ssm:us-east-1:512646826903:parameter/${var.env}.${var.project_name}.rds.*", "arn:aws:ssm:us-east-1:512646826903:parameter/newrelic.*"]
 
 
   sg_cidr_block        = lookup(lookup(var.vpc, "main", null), "app_subnets_cidr" , null)
@@ -82,7 +82,7 @@ module "frontend" {
   app_port             = lookup(each.value, "frontend_app_port", null)
   instance_capacity    = lookup(each.value, "frontend_instance_capacity", null)
   instance_type        = lookup(each.value, "frontend_instance_type", null)
-  parameters           = []
+  parameters           = ["arn:aws:ssm:us-east-1:512646826903:parameter/newrelic.*"]
 
 
   sg_cidr_block        = lookup(lookup(var.vpc, "main", null), "public_subnets_cidr" , null)
