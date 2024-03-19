@@ -7,7 +7,7 @@ pipelines:
     display_order: -1
     materials:
       ansible:
-        git: https://github.com/madhan-46/expense-terraform
+        git: https://github.com/MMR-46org/expense-terraform
         shallow_clone: false
         auto_update: true
         branch: main
