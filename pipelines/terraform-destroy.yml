@@ -66,7 +66,8 @@ pipelines:
               timeout: 0
               tasks:
                 - exec:
-                    command: ls
-                    arguments:
-                      - -l
-                      - -A
+                    command: terraform
+                    arguments: [ "init","-backend-config=env-prod/state.tfvars" ]
+                - exec:
+                    command: terraform
+                    arguments: [ "destroy", "-var-file=env-prod/main.tfvars", "-auto-approve" ]
